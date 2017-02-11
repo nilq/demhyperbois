@@ -16,49 +16,40 @@ class
       3
     }
 
-    @eye_pos = {
-      .line @pos, {
-        @pos[1] + 100 * (@radius / 2) * math.cos i
-        @pos[2] + 100 * (@radius / 2) * math.sin i
-        0
-        0
-      }
+    @eye_pos = {}
 
-      .line @pos, {
-        0
-        @pos[1] + 100 * (@radius / 2) * math.cos i
-        @pos[2] + 100 * (@radius / 2) * math.sin i
-        0
-      }
+    for e in *@eyes
+      for i = 0, math.pi, math.pi / e
+        table.insert @eye_pos, (radius, pos) -> {
+          pos[1] + 100 * (radius / 2) * math.cos i
+          pos[2] + 100 * (radius / 2) * math.sin i
+          0
+          0
+        }
 
-      .line @pos, {
-        0
-        0
-        @pos[1] + 100 * (@radius / 2) * math.cos i
-        @pos[2] + 100 * (@radius / 2) * math.sin i
-      }
+        table.insert @eye_pos, (radius, pos) -> {
+          0
+          pos[1] + 100 * (radius / 2) * math.cos i
+          pos[2] + 100 * (radius / 2) * math.sin i
+          0
+        }
 
-      .line @pos, {
-        @pos[1] + 100 * (@radius / 2) * math.cos i
-        0
-        @pos[2] + 100 * (@radius / 2) * math.sin i
-        0
-      }
+        table.insert @eye_pos, (radius, pos) -> {
+          0
+          0
+          pos[1] + 100 * (radius / 2) * math.cos i
+          pos[2] + 100 * (radius / 2) * math.sin i
+        }
 
-      .line @pos, {
-        @pos[1] + 100 * (@radius / 2) * math.cos i
-        0
-        0
-        @pos[2] + 100 * (@radius / 2) * math.sin i
-      }
+        table.insert @eye_pos, (radius, pos) -> {
+          pos[1] + 100 * (radius / 2) * math.cos i
+          0
+          pos[2] + 100 * (radius / 2) * math.sin i
+          0
+        }
 
-      .line @pos, {
-        0
-        @pos[2] + 100 * (@radius / 2) * math.sin i
-        0
-        @pos[1] + 100 * (@radius / 2) * math.cos i
-      }
-    }
+
+    wbuff [(ep @radius, @pos) for ep in *@eye_pos]
 
     @a = 0
 
@@ -74,5 +65,5 @@ class
       .circle "fill", @pos, @radius
 
       love.graphics.setColor 0, 0, 0
-      for e in *@eyes
-        for i = 0, math.pi, math.pi / e
+      for e in *@eye_pos
+        .line @pos, e @radius, @pos

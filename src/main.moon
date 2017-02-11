@@ -10,7 +10,7 @@ with love
     for i = 1, 1
       table.insert agents, Agent (math.random 0, 800), (math.random 0, 800), (math.random 0, 800), (math.random 0, 800)
 
-  wbuff = (l) ->
+  export wbuff = (l) ->
     table.sort l, (a, b) ->
       a[4] > b[4]
 
